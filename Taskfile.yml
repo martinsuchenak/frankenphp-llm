@@ -49,6 +49,12 @@ tasks:
     cmds:
       - ./{{.OUTPUT}} run
 
+  example:
+    desc: "Run an example script (usage: task example -- examples/01_hello_llm.php)"
+    deps: [build]
+    cmds:
+      - ./{{.OUTPUT}} php-cli {{.CLI_ARGS}}
+
   tidy:
     desc: Tidy go.mod
     cmds:
