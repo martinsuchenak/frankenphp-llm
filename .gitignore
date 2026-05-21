@@ -1,0 +1,29 @@
+# Compiled Binaries
+frankenphp
+frankenphp-custom
+
+# Embedded PHP wrapper
+php
+
+# Large GGUF LLM models
+models/
+
+# PHP Parser development tool
+PHP-Parser-5.6.1/
+
+# Go binary and temporary files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# Local development copies of dependencies (if kept in directory)
+scriptling-llm-lib/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
