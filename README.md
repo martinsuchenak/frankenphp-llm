@@ -14,16 +14,39 @@ To compile the custom FrankenPHP binary with the `frankenphp_llm` extension prel
   brew tap shivammathur/php
   brew install php-zts
   ```
+- **Task** (optional but recommended): Install the [Task](https://taskfile.dev) runner for the convenience commands below:
+  ```bash
+  brew install go-task
+  ```
 
 ### 2. Compilation
 
-Compile the custom FrankenPHP binary with cgo linking against the ZTS installation:
+The `Taskfile.yml` auto-detects the PHP-ZTS path from Homebrew:
 
 ```bash
-CGO_CFLAGS="-I/opt/homebrew/Cellar/php-zts/8.5.6/include/php -I/opt/homebrew/Cellar/php-zts/8.5.6/include/php/main -I/opt/homebrew/Cellar/php-zts/8.5.6/include/php/TSRM -I/opt/homebrew/Cellar/php-zts/8.5.6/include/php/Zend -I/opt/homebrew/Cellar/php-zts/8.5.6/include/php/ext -I/opt/homebrew/Cellar/php-zts/8.5.6/include/php/ext/date/lib" \
-CGO_LDFLAGS="-L/opt/homebrew/Cellar/php-zts/8.5.6/lib -lphp" \
+task build
+```
+
+This is equivalent to running:
+
+```bash
+CGO_CFLAGS="-I$(brew --prefix php-zts)/include/php ..." \
+CGO_LDFLAGS="-L$(brew --prefix php-zts)/lib -lphp" \
 go build -tags nowatcher -o frankenphp-custom
 ```
+
+Other tasks:
+
+| Command | Description |
+|---------|-------------|
+| `task build` | Compile `frankenphp-custom` |
+| `task test` | Build then run `test.php` with the custom binary |
+| `task run` | Build then start FrankenPHP server |
+| `task tidy` | Tidy `go.mod` |
+| `task clean` | Remove the compiled binary |
+| `task models:download` | Download SmolLM2 models from HuggingFace (~5 GB) |
+| `task models:download:extra` | Download Llama 3.2, Qwen2.5, Qwen3 models |
+| `task models:clean` | Remove all downloaded `.gguf` model files |
 
 *Note: The `-tags nowatcher` flag avoids compilation errors with C++ filesystem watcher dependencies on some systems.*
 
